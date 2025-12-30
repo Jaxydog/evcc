@@ -30,7 +30,7 @@ module.repository = {}
 ---
 ---@return boolean valid Whether the name is valid.
 function module.repository.validateName(name)
-    return type(name) == 'string' and name:match('^[%l][%l%d]-[%l%d]$')
+    return type(name) == 'string' and name:match('^[%l][%l%d-]-[%l%d]$')
 end
 
 ---Returns `true` if the given URL is considered valid.
