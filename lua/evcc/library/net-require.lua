@@ -321,7 +321,7 @@ function module.require(import, options)
     local repositoryPath = module.repository.getDirPath(repositoryName)
 
     local downloadUrl = repositoryUrl .. '/' .. externalFileName .. '.lua'
-    local downloadPath = fs.combine(repositoryPath, externalFileName)
+    local downloadPath = fs.combine(repositoryPath, externalFileName) .. '.lua'
 
     local shouldOverwriteLocal = options.forceDownload or not fs.exists(downloadPath)
     local downloadContent = nil
