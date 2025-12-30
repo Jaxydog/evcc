@@ -210,7 +210,7 @@ function module.hash.loadPersistentData()
 
     for filePath, fileHash in pairs(hashesMap) do
         assert(type(filePath) == 'string', 'Invalid file path')
-        assert(type(fileHash) == 'number' and math.type(fileHash) == 'integer', 'Invalid file hash')
+        assert(type(fileHash) == 'number' and ({ math.modf(fileHash) })[2] == 0, 'Invalid file hash')
     end
 
     return hashesMap
