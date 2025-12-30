@@ -298,6 +298,8 @@ function module.createSurface(value)
         assert(y > 0, 'The given height must be at least 1')
 
         self.size = { x = x, y = y }
+        self[1] = {}
+        self[2] = {}
         self:fill({})
     end
 
