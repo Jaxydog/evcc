@@ -333,6 +333,8 @@ function module.createSurface(value)
     function surface:setScale(scale)
         self.api:setScale(scale)
 
+        sleep(0.05) -- Wait one tick for the monitor to catch up.
+
         local x, y = self:getSize()
 
         self.buffer:resize(x, y)
