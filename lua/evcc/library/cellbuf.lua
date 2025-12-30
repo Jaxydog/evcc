@@ -200,6 +200,8 @@ function module.createSurface(value)
     ---@param y integer The Y position, must be between `1` and the height of the buffer.
     ---@param data evcc.cellbuf.Cell The cell data.
     function surface.buffer:set(x, y, data)
+        assert(not data.char or data.char:len() == 1, 'Character must be a single character')
+
         self:mutable()[self:index(x, y)] = data
     end
 
@@ -207,6 +209,8 @@ function module.createSurface(value)
     ---
     ---@param data evcc.cellbuf.Cell The cell data.
     function surface.buffer:fill(data)
+        assert(not data.char or data.char:len() == 1, 'Character must be a single character')
+
         local buffer = self:mutable()
 
         for index = 1, self.size.x * self.size.y do
@@ -228,6 +232,7 @@ function module.createSurface(value)
         assert(endY > 0 and endY <= self.size.y, 'Invalid ending Y position')
         assert(startX <= endX, 'Invalid X position range')
         assert(startY <= endY, 'Invalid Y position range')
+        assert(not data.char or data.char:len() == 1, 'Character must be a single character')
 
         local buffer = self:mutable()
 
@@ -247,6 +252,8 @@ function module.createSurface(value)
         for index, cell in ipairs(buffer) do
             local x, y = self:pos(index)
             local output = func(x, y, cell)
+
+            assert(not output or not output.char or output.char:len() == 1, 'Character must be a single character')
 
             buffer[index] = output or cell
         end
@@ -273,8 +280,11 @@ function module.createSurface(value)
             for x = startX, endX do
                 local index = self:index(x, y)
                 local cell = buffer[index]
+                local output = func(x, y, cell)
 
-                buffer[index] = func(x, y, cell) or cell
+                assert(not output or not output.char or output.char:len() == 1, 'Character must be a single character')
+
+                buffer[index] = output or cell
             end
         end
     end
@@ -417,6 +427,8 @@ function module.createSurface(value)
     ---Draws all finished cells to the surface.
     function surface:draw()
         for index, cell in ipairs(self.buffer:immutable()) do
+            assert(not cell.char or cell.char:len() == 1, 'Character must be a single character')
+
             local x, y = self.buffer:pos(index)
 
             if x == 1 then
