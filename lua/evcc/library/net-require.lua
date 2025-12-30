@@ -245,7 +245,7 @@ function module.hash.generate(text)
     local hash = 5381
 
     for character in text:gmatch('.') do
-        hash = math.fmod(((hash << 5) + hash) + string.byte(character), 2147483648)
+        hash = math.fmod((hash * 33) + string.byte(character), 2147483648)
     end
 
     return hash
